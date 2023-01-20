@@ -10,6 +10,7 @@
     NetworkSwitch = "Default Switch"
     VHDPath = "C:\Users\Public\Documents\Hyper-V\Virtual Hard Disks\"
     UnattendPath = "$PSScriptRoot"+"\autounattend.xml"
+    GPUID = 0
     GPUName = "AUTO"
     GPUResourceAllocationPercentage = 50
     Team_ID = ""
@@ -4317,7 +4318,7 @@ param(
     
     $PartitionableGPUList = Get-WmiObject -Class "Msvm_PartitionableGpu" -ComputerName $env:COMPUTERNAME -Namespace "ROOT\virtualization\v2" 
     if ($GPUName -eq "AUTO") {
-        $DevicePathName = $PartitionableGPUList.Name[0]
+        $DevicePathName = $PartitionableGPUList.Name[$params.GPUID]
         Add-VMGpuPartitionAdapter -VMName $VMName
         }
     else {
